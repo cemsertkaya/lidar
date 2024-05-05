@@ -14,6 +14,7 @@
 		4E4847AF2BE796D500156AD3 /* LidarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4847AE2BE796D500156AD3 /* LidarTests.swift */; };
 		4E4847B92BE796D500156AD3 /* LidarUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4847B82BE796D500156AD3 /* LidarUITests.swift */; };
 		4E4847BB2BE796D500156AD3 /* LidarUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4847BA2BE796D500156AD3 /* LidarUITestsLaunchTests.swift */; };
+		4E4848172BE79E0300156AD3 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4848162BE79E0300156AD3 /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		4E4847B42BE796D500156AD3 /* LidarUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LidarUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E4847B82BE796D500156AD3 /* LidarUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LidarUITests.swift; sourceTree = "<group>"; };
 		4E4847BA2BE796D500156AD3 /* LidarUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LidarUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		4E4848162BE79E0300156AD3 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			children = (
 				4E48479D2BE796D400156AD3 /* LidarApp.swift */,
 				4E48479F2BE796D400156AD3 /* ContentView.swift */,
+				4E4848162BE79E0300156AD3 /* CameraViewController.swift */,
 				4E4847A12BE796D500156AD3 /* Assets.xcassets */,
 				4E4847A32BE796D500156AD3 /* Preview Content */,
 			);
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E4848172BE79E0300156AD3 /* CameraViewController.swift in Sources */,
 				4E4847A02BE796D400156AD3 /* ContentView.swift in Sources */,
 				4E48479E2BE796D400156AD3 /* LidarApp.swift in Sources */,
 			);
@@ -347,6 +351,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please give access to camera";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
@@ -404,6 +409,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Please give access to camera";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
