@@ -8,67 +8,60 @@
 import SwiftUI
 import AVFoundation
 
-struct CameraView: View {
-    @State private var isCameraOn: Bool = false
+struct ContentView: View {
+    @StateObject var model = CameraModel()
 
+    // MARK: - body
     var body: some View {
-        VStack {
-            if isCameraOn {
-                ZStack {
-                    CameraPreview(isActive: $isCameraOn)
-                }
-            } else {
-                Text("Tap to start camera")
-                    .onTapGesture {
-                        self.isCameraOn.toggle()
+        ZStack {
+            Color.black.edgesIgnoringSafeArea(.all)
+
+            VStack {
+                CameraPreview(session: model.session)
+                    .onAppear {
+                        model.configure()
                     }
+
+
+                Button(action: {
+                    model.capturePhoto()
+                }, label: {
+                    Circle()
+                        .foregroundColor(.white)
+                        .frame(width: 60, height: 60, alignment: .center)
+                        .overlay(
+                            Circle()
+                                .stroke(Color.black.opacity(0.8), lineWidth: 2)
+                                .frame(width: 65, height: 65, alignment: .center)
+                        )
+                })
             }
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 
-struct CameraPreview: View {
-    @Binding var isActive: Bool
+struct CameraPreview: UIViewRepresentable {
+    class VideoPreviewView: UIView {
+        override class var layerClass: AnyClass {
+             AVCaptureVideoPreviewLayer.self
+        }
 
-    var body: some View {
-        CameraPreviewRepresentable(isActive: $isActive)
-            .edgesIgnoringSafeArea(.all)
+        var videoPreviewLayer: AVCaptureVideoPreviewLayer {
+            return layer as! AVCaptureVideoPreviewLayer
+        }
+    }
+
+    let session: AVCaptureSession
+
+    func makeUIView(context: Context) -> VideoPreviewView {
+        let view = VideoPreviewView()
+        view.backgroundColor = .black
+        view.videoPreviewLayer.cornerRadius = 0
+        view.videoPreviewLayer.session = session
+        return view
+    }
+
+    func updateUIView(_ uiView: VideoPreviewView, context: Context) {
+
     }
 }
-
-// Integrates CameraViewController into SwiftUI view hierarchy
-struct CameraPreviewRepresentable: UIViewControllerRepresentable {
-    @Binding var isActive: Bool
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator(self)
-    }
-
-    func makeUIViewController(context: Context) -> CameraViewController {
-        let viewController = CameraViewController()
-        viewController.delegate = context.coordinator
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: CameraViewController, context: Context) {
-        if isActive {
-            uiViewController.startCamera()
-        } else {
-            uiViewController.stopCamera()
-        }
-    }
-
-    class Coordinator: NSObject, CameraViewControllerDelegate {
-        var parent: CameraPreviewRepresentable
-
-        init(_ parent: CameraPreviewRepresentable) {
-            self.parent = parent
-        }
-
-        func didCaptureImage(image: UIImage) {
-            parent.isActive = false
-        }
-    }
-}
-
