@@ -14,10 +14,6 @@ final class CameraModel: ObservableObject {
 
     @Published var willCapturePhoto = false
 
-    @Published var isDepthMapAvailable = false
-
-    @Published var isLiDARAvailable = false
-
     var session: AVCaptureSession
 
     private var subscriptions = Set<AnyCancellable>()

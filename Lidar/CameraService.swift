@@ -107,6 +107,8 @@ public class CameraService {
                 return
             }
 
+            print("Lidar enabled ")
+
             defaultVideoDevice = lidarDepthCamera
 
             guard let videoDevice = defaultVideoDevice else {
@@ -138,6 +140,8 @@ public class CameraService {
         // Add the photo output.
         if session.canAddOutput(photoOutput) {
             session.addOutput(photoOutput)
+
+            photoOutput.isDepthDataDeliveryEnabled = photoOutput.isDepthDataDeliverySupported
             photoOutput.maxPhotoQualityPrioritization = .quality
 
         } else {
@@ -171,9 +175,12 @@ public class CameraService {
     public func capturePhoto() {
         if self.setupResult != .configurationFailed {
             sessionQueue.async {
-                let photoSettings = AVCapturePhotoSettings()
+                var photoSettings = AVCapturePhotoSettings()
 
-                photoSettings.photoQualityPrioritization = .quality
+                // Sets the depth data
+                if self.photoOutput.isDepthDataDeliverySupported {
+                    photoSettings.isDepthDataDeliveryEnabled = self.photoOutput.isDepthDataDeliveryEnabled
+                }
 
                 let photoCaptureProcessor = PhotoCaptureProcessor(with: photoSettings)
 
