@@ -175,7 +175,7 @@ public class CameraService {
     public func capturePhoto() {
         if self.setupResult != .configurationFailed {
             sessionQueue.async {
-                var photoSettings = AVCapturePhotoSettings()
+                let photoSettings = AVCapturePhotoSettings()
 
                 // Sets the depth data
                 if self.photoOutput.isDepthDataDeliverySupported {

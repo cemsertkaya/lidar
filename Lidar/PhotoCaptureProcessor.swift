@@ -8,6 +8,8 @@
 import Foundation
 import Photos
 import UIKit
+import MobileCoreServices
+import UniformTypeIdentifiers
 
 class PhotoCaptureProcessor: NSObject {
     
@@ -58,16 +60,25 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
     }
 
     func convertImageToTIFF(image: UIImage) -> Data? {
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
-            return imageData
-        } else {
-            print("Failed to convert image to TIFF format.")
+        guard let cgImage = image.cgImage else {
+            print("Failed to get CGImage from UIImage.")
             return nil
         }
+
+        let mutableData = CFDataCreateMutable(nil, 0)!
+
+        guard let imageDestination = CGImageDestinationCreateWithData(mutableData, UTType.tiff.identifier as CFString, 1, nil) else {
+            print("Failed to create CGImageDestination.")
+            return nil
+        }
+
+        CGImageDestinationAddImage(imageDestination, cgImage, nil)
+        CGImageDestinationFinalize(imageDestination)
+
+        return mutableData as Data
     }
 
     func saveTIFFImageToFile(imageData: Data, filename: String) {
-        // Save the TIFF image data to a file
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let fileURL = documentsDirectory.appendingPathComponent(filename + ".tiff")
 
