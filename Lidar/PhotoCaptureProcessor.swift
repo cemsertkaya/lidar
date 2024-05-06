@@ -84,6 +84,11 @@ extension PhotoCaptureProcessor: AVCapturePhotoCaptureDelegate {
 
         do {
             try imageData.write(to: fileURL)
+            let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+            if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+               let viewController = windowScene.windows.first?.rootViewController {
+                viewController.present(activityViewController, animated: true, completion: nil)
+            }
             print("TIFF image saved successfully at: \(fileURL)")
         } catch {
             print("Error saving TIFF image: \(error)")
